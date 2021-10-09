@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Machines.DAL.Handlers
+namespace Machines.DAL.DataAccess
 {
-    public static class MalfunctionHandler
+    public static class MalfunctionDataAccess
     {
         public static List<Malfunction> GetAllMalfunctions()
         {

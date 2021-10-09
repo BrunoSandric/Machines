@@ -15,7 +15,6 @@ namespace Machines.DAL.Models
         public int Priority { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-
         public string Description { get; set; }
 
            

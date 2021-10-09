@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Machines.DAL.Handlers
+namespace Machines.DAL.DataAccess
 {
-    public static class MachineHandler
+    public static class MachineDataAccess
     {
         public static List<Machine> GetAllMachines()
         {

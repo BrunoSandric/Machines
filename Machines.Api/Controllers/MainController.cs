@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Machines.BL.Handlers;
+using Machines.BL.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Machines_Malfunctions.Controllers
@@ -17,10 +20,23 @@ namespace Machines_Malfunctions.Controllers
 
         }
 
-        [HttpGet("/api/")]
-        public void Test()
+        [HttpGet("/api/machines")]
+        public List<MachineWithMalfunctionsModel> Test()
         {
+            return MachineHandler.GetAllMachines();
+        }
 
+        [HttpGet("/api/machines/{machineId}")]
+        public IActionResult Test2(int machineId)
+        {
+            var response = MachineHandler.GetSingleMachine(machineId);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            return Ok(response.Payload);
         }
     }
 }
