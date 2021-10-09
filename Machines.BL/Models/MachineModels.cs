@@ -15,8 +15,8 @@ namespace Machines.BL.Models
 
         public MachineModel(Machine dbEntity)
         {
-            this.Id = dbEntity.Id;
-            this.Name = dbEntity.Name;
+            this.Id = dbEntity.id;
+            this.Name = dbEntity.name;
         }
     }
     public class MachineWithMalfunctionsModel : MachineModel
@@ -31,8 +31,8 @@ namespace Machines.BL.Models
         }
         public MachineWithMalfunctionsModel(Machine dbEntity)
         {
-            this.Id = dbEntity.Id;
-            this.Name = dbEntity.Name;
+            this.Id = dbEntity.id;
+            this.Name = dbEntity.name;
 
             CalculateAverageDuration();
         }

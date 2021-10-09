@@ -9,7 +9,7 @@ namespace Machines.BL.Models
     {
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
 
-        public List<string> ValidationErrors { get; set; } = new List<string>();
+        public List<string> Errors { get; set; } = new List<string>();
 
         public object Payload { get; set; }
     }

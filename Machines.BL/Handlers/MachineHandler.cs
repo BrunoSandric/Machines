@@ -2,6 +2,7 @@
 using Dapper.Contrib.Extensions;
 using Machines.BL.Models;
 using Machines.DAL.DataAccess;
+using Machines.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,32 @@ namespace Machines.BL.Handlers
             {
                 toReturn.StatusCode = HttpStatusCode.NotFound;
             }
+
+            return toReturn;
+        }
+
+        // post put delete//
+
+        public static ApiResponseModel InsertMachine(Machine machine)
+        {
+            var toReturn = new ApiResponseModel();
+
+            if (string.IsNullOrEmpty(machine.name))
+            {
+                toReturn.StatusCode = HttpStatusCode.BadRequest;
+                toReturn.Errors.Add("Empty name");
+                return toReturn;
+            }
+
+            if (MachineDataAccess.GetAllMachines().Select(machine => machine.name).Contains(machine.name))
+            {
+                toReturn.StatusCode = HttpStatusCode.BadRequest;
+                toReturn.Errors.Add("Name already present in DB");
+                return toReturn;
+            }
+
+            var insertMachineId = MachineDataAccess.InsertMachine(machine);
+            toReturn.Payload = insertMachineId;
 
             return toReturn;
         }

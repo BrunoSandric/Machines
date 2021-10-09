@@ -22,13 +22,13 @@ namespace Machines.BL.Models
         }
         public MalfunctionModel(Malfunction dbEntity)
         {
-            this.Id = dbEntity.Id;
-            this.MachineId = dbEntity.MachineId;
-            this.StatusId = dbEntity.StatusId;
-            this.Priority = dbEntity.Priority;
-            this.StartTime = dbEntity.StartTime;
-            this.EndTime = dbEntity.EndTime;
-            this.Description = dbEntity.Description;
+            this.Id = dbEntity.id;
+            this.MachineId = dbEntity.machineId;
+            this.StatusId = dbEntity.statusId;
+            this.Priority = dbEntity.priority;
+            this.StartTime = dbEntity.startTime;
+            this.EndTime = dbEntity.endTime;
+            this.Description = dbEntity.description;
 
             CalculateDuration();
         }

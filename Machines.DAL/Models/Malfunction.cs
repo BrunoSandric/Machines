@@ -9,13 +9,13 @@ namespace Machines.DAL.Models
     public class Malfunction
     {
         [Key]
-        public int Id { get; set; }
-        public int MachineId { get; set; }
-        public int StatusId { get; set; }
-        public int Priority { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public string Description { get; set; }
+        public int id { get; set; }
+        public int machineId { get; set; }
+        public int statusId { get; set; }
+        public int priority { get; set; }
+        public DateTime startTime { get; set; }
+        public DateTime? endTime { get; set; }
+        public string description { get; set; }
 
            
     }
