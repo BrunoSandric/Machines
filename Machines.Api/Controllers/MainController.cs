@@ -15,7 +15,6 @@ namespace Machines_Malfunctions.Controllers
     [ApiController]
     public class MainController : ControllerBase
     {
-
         public MainController()
         {
 
@@ -48,6 +47,48 @@ namespace Machines_Malfunctions.Controllers
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
                 return BadRequest(response.Errors);
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("/api/machines/{machineId}")]
+        public IActionResult DeleteMachine( int machineId)
+        {
+            var response = MachineHandler.DeleteMachine(machineId);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                return StatusCode(500, response.Errors);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("/api/machines/{machineId}")]
+        public IActionResult UpdateMachine(int machineId, [FromBody] Machine machine)
+        {
+            machine.id = machineId;
+            var response = MachineHandler.UpdateMachine(machine);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                return StatusCode(500, response.Errors);
             }
 
             return Ok();

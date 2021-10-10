@@ -38,12 +38,16 @@ namespace Machines.DAL.DataAccess
                 return connection.Update<Machine>(machineToUpdate);
             }
         }
-        public static bool DeleteMachine(Machine machineToDelete)
+        public static bool DeleteMachine(Machine machine)
         {
             using (var connection = Database.DatabaseUtils.GetConnection())
             {
-                return connection.Delete<Machine>(machineToDelete);
+                return connection.Delete<Machine>(machine);
             }
+        }
+        public static bool DeleteMachine(int machineId)
+        {
+            return DeleteMachine(new Machine() { id = machineId });
         }
         public static List<Malfunction> GetAllMachineMalfunctions(int machineId)
         {

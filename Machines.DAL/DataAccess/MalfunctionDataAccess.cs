@@ -44,7 +44,9 @@ namespace Machines.DAL.DataAccess
                 return connection.Delete<Malfunction>(malfunctionToDelete);
             }
         }
-
-
+        public static bool DeleteMalfunction(int malfunctionId)
+        {
+            return DeleteMalfunction(new Malfunction() { id = malfunctionId });
+        }
     }
 }
