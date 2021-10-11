@@ -19,7 +19,7 @@ namespace Machines_Malfunctions.Controllers
         {
 
         }
-
+        // Machines
         [HttpGet("/api/machines")]
         public List<MachineWithMalfunctionsModel> GetAllMachines()
         {
@@ -75,6 +75,84 @@ namespace Machines_Malfunctions.Controllers
         {
             machine.id = machineId;
             var response = MachineHandler.UpdateMachine(machine);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                return StatusCode(500, response.Errors);
+            }
+
+            return Ok();
+        }
+
+        // Malfunctions
+
+        [HttpGet("/api/malfunctions")]
+        public List<MalfunctionModel> GetAllMalfunctions()
+        {
+            return MalfunctionHandler.GetAllMalfunctions();
+        }
+
+        [HttpGet("/api/malfunctions/{malfunctionId}")]
+        public IActionResult GetSingleMalfunction(int malfunctionId)
+        {
+            var response = MachineHandler.GetSingleMachine(malfunctionId);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound();
+            }
+
+            return Ok(response.Payload);
+        }
+
+
+        [HttpPost("/api/malfunctions")]
+        public IActionResult InsertMalfunction([FromBody] Malfunction malfunction)
+        {
+            var response = MalfunctionHandler.InsertMalfunction(malfunction);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(response.Errors);
+            }
+            return Ok();
+        }
+
+
+        [HttpDelete("/api/malfunctions/{malfunctionId}")]
+        public IActionResult DeleteMalfunction(int malfunctionId)
+        {
+            var response = MalfunctionHandler.DeleteMalfunction(malfunctionId);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                return StatusCode(500, response.Errors);
+            }
+
+            return Ok();
+        }
+
+
+        [HttpPut("/api/malfunctions/{malfunctionId")]
+        public IActionResult UpdateMalfunction(int malfunctionId, [FromBody] Malfunction malfunction)
+        {
+            malfunction.id = malfunctionId;
+            var response = MalfunctionHandler.UpdateMalfunction(malfunction);
 
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {

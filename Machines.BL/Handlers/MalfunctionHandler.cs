@@ -1,18 +1,14 @@
-﻿using Dapper.Contrib.Extensions;
-using Machines.BL.Models;
+﻿using Machines.BL.Models;
 using Machines.DAL.DataAccess;
 using Machines.DAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace Machines.BL.Handlers
 {
     public static class MalfunctionHandler
     {
-
+       
         public static List<MalfunctionModel> GetAllMalfunctions()
         {
             var dbMalfunctions = MalfunctionDataAccess.GetAllMalfunctions();
@@ -123,7 +119,7 @@ namespace Machines.BL.Handlers
                 toReturn.Errors.Add("Malfunction ID not found in DB");
                 return toReturn;
             }
-   
+
             #endregion
 
             var updateSuccess = MalfunctionDataAccess.UpdateMalfunction(malfunctions);
@@ -136,5 +132,8 @@ namespace Machines.BL.Handlers
             return toReturn;
         }
 
+
+
     }
+
 }
