@@ -15,11 +15,9 @@ namespace Machines_Malfunctions.Controllers
     [ApiController]
     public class MainController : ControllerBase
     {
-        public MainController()
-        {
+        //HTTP methods correspond to CRUD 
+        #region Machines
 
-        }
-        // Machines
         [HttpGet("/api/machines")]
         public List<MachineWithMalfunctionsModel> GetAllMachines()
         {
@@ -53,7 +51,7 @@ namespace Machines_Malfunctions.Controllers
         }
 
         [HttpDelete("/api/machines/{machineId}")]
-        public IActionResult DeleteMachine( int machineId)
+        public IActionResult DeleteMachine(int machineId)
         {
             var response = MachineHandler.DeleteMachine(machineId);
 
@@ -94,7 +92,9 @@ namespace Machines_Malfunctions.Controllers
             return Ok();
         }
 
-        // Malfunctions
+        #endregion
+
+        #region Malfunctions
 
         [HttpGet("/api/malfunctions")]
         public IActionResult GetAllMalfunctions([FromQuery] int? page, [FromQuery] int? pageSize)
@@ -180,14 +180,16 @@ namespace Machines_Malfunctions.Controllers
         }
 
 
+        #endregion
 
-        //MalfunctionStatus 
-
+        #region MalfunctionStatus
 
         [HttpGet("/api/malfunctionstatuses")]
         public List<MalfunctionStatusModel> GetAllMalfunctionStatuses()
         {
             return MalfunctionStatusHandler.GetAllMalfunctionStatuses();
         }
+
+        #endregion
     }
 }

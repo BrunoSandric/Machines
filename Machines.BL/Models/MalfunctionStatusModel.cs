@@ -18,4 +18,10 @@ namespace Machines.BL.Models
 
         }
     }
+    public static class MalfunctionStatuses
+    {
+        public const int Active = 1;
+        public const int Finished = 2;
+    }
+
 }

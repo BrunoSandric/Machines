@@ -12,6 +12,4 @@ namespace Machines.DAL.Models
         [Key]
         public int id { get; set; }
         public string name { get; set; }
-
-    }
-}
+    }}

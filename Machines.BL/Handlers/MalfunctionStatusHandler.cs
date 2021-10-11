@@ -24,4 +24,5 @@ namespace Machines.BL.Handlers
             return malfunctionStatuses;
         }
     }
+
 }
