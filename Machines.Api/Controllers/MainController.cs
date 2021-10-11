@@ -171,5 +171,16 @@ namespace Machines_Malfunctions.Controllers
 
             return Ok();
         }
+
+
+
+        //MalfunctionStatus 
+
+
+        [HttpGet("/api/malfunctionstatuses")]
+        public List<MalfunctionStatusModel> GetAllMalfunctionStatuses()
+        {
+            return MalfunctionStatusHandler.GetAllMalfunctionStatuses();
+        }
     }
 }
