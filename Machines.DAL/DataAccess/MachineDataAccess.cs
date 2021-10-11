@@ -62,7 +62,7 @@ namespace Machines.DAL.DataAccess
         {
             using (var connection = Database.DatabaseUtils.GetConnection())
             {
-                machineMalfuntion.machineId = machineId; 
+                machineMalfuntion.machineid = machineId; 
 
                 return (int)connection.Insert<Malfunction>(machineMalfuntion);
             }

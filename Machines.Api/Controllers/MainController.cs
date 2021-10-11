@@ -97,9 +97,16 @@ namespace Machines_Malfunctions.Controllers
         // Malfunctions
 
         [HttpGet("/api/malfunctions")]
-        public List<MalfunctionModel> GetAllMalfunctions()
+        public IActionResult GetAllMalfunctions([FromQuery] int? page, [FromQuery] int? pageSize)
         {
-            return MalfunctionHandler.GetAllMalfunctions();
+            var response = MalfunctionHandler.GetAllMalfunctions(page, pageSize);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            return Ok(response.Payload);
         }
 
         [HttpGet("/api/malfunctions/{malfunctionId}")]
@@ -125,7 +132,7 @@ namespace Machines_Malfunctions.Controllers
             {
                 return BadRequest(response.Errors);
             }
-            return Ok();
+            return Ok(response.Payload);
         }
 
 
@@ -148,7 +155,7 @@ namespace Machines_Malfunctions.Controllers
         }
 
 
-        [HttpPut("/api/malfunctions/{malfunctionId")]
+        [HttpPut("/api/malfunctions/{malfunctionId}")]
         public IActionResult UpdateMalfunction(int malfunctionId, [FromBody] Malfunction malfunction)
         {
             malfunction.id = malfunctionId;

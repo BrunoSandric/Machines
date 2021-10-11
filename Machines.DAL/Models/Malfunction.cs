@@ -10,11 +10,11 @@ namespace Machines.DAL.Models
     {
         [Key]
         public int id { get; set; }
-        public int machineId { get; set; }
-        public int statusId { get; set; }
+        public int machineid { get; set; }
+        public int statusid { get; set; }
         public int priority { get; set; }
-        public DateTime startTime { get; set; }
-        public DateTime? endTime { get; set; }
+        public DateTime starttime { get; set; }
+        public DateTime? endtime { get; set; }
         public string description { get; set; }
 
            

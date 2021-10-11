@@ -1,16 +1,19 @@
 ﻿using Machines.BL.Models;
 using Machines.DAL.DataAccess;
 using Machines.DAL.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Machines.BL.Handlers
 {
     public static class MalfunctionHandler
     {
-       
-        public static List<MalfunctionModel> GetAllMalfunctions()
+
+        public static ApiResponseModel GetAllMalfunctions(int? page, int? pageSize)
         {
+            var toReturn = new ApiResponseModel();
             var dbMalfunctions = MalfunctionDataAccess.GetAllMalfunctions();
             var malfunctions = new List<MalfunctionModel>();
             foreach (var dbItem in dbMalfunctions)
@@ -18,7 +21,35 @@ namespace Machines.BL.Handlers
                 malfunctions.Add(new MalfunctionModel(dbItem));
             }
 
-            return malfunctions;
+            // sorts by priority ascending, then by start time descending then creates list in that order
+            malfunctions = malfunctions.OrderBy(i => i.Priority).ThenByDescending(j => j.StartTime).ToList();
+
+            var count = malfunctions.Count;
+
+            //pagination
+            if (page > 0 && pageSize > 1)
+            {
+                pageSize = pageSize ?? 20;
+                int skip = (page.Value - 1) * pageSize.Value;
+
+                if (malfunctions.Count <= skip)
+                {
+                    toReturn.StatusCode = HttpStatusCode.BadRequest;
+                    toReturn.Errors.Add($"Requested page does not exist. Number of malfunctions in system: {count}");
+
+                    return toReturn;
+                }
+
+                malfunctions = malfunctions.Skip(skip).Take(pageSize.Value).ToList();
+            }
+
+            toReturn.Payload = new
+            {
+                Items = malfunctions,
+                TotalItems = count
+            };
+
+            return toReturn;
         }
 
         public static ApiResponseModel GetSingleMalfunction(int malfunctionId)
@@ -40,17 +71,33 @@ namespace Machines.BL.Handlers
         {
             var toReturn = new ApiResponseModel();
 
+            var activeMalfunctionOnMachine = false;
             var malfunctionWithSameIdExists = false;
             foreach (var item in MalfunctionDataAccess.GetAllMalfunctions())
             {
+                if (item.endtime == null && item.machineid == malfunctions.machineid)
+                {
+                    activeMalfunctionOnMachine = true;
+                }
                 if (item.id == malfunctions.id)
                 {
                     malfunctionWithSameIdExists = true;
+
+                }
+                if (activeMalfunctionOnMachine && malfunctionWithSameIdExists)
+                {
                     break;
                 }
             }
+            if (activeMalfunctionOnMachine)
+            {
+                toReturn.StatusCode = HttpStatusCode.BadRequest;
+                toReturn.Errors.Add("Machine already has an active malfunction");
+                return toReturn;
+            }
             if (malfunctionWithSameIdExists)
             {
+
                 toReturn.StatusCode = HttpStatusCode.BadRequest;
                 toReturn.Errors.Add("Malfunction ID already present in DB");
                 return toReturn;

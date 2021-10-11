@@ -23,11 +23,11 @@ namespace Machines.BL.Models
         public MalfunctionModel(Malfunction dbEntity)
         {
             this.Id = dbEntity.id;
-            this.MachineId = dbEntity.machineId;
-            this.StatusId = dbEntity.statusId;
+            this.MachineId = dbEntity.machineid;
+            this.StatusId = dbEntity.statusid;
             this.Priority = dbEntity.priority;
-            this.StartTime = dbEntity.startTime;
-            this.EndTime = dbEntity.endTime;
+            this.StartTime = dbEntity.starttime;
+            this.EndTime = dbEntity.endtime;
             this.Description = dbEntity.description;
 
             CalculateDuration();
