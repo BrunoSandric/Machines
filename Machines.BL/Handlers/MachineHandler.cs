@@ -62,7 +62,6 @@ namespace Machines.BL.Handlers
             return toReturn;
         }
 
-
         public static ApiResponseModel InsertMachine(Machine machine)
         {
             var toReturn = new ApiResponseModel();
@@ -74,12 +73,21 @@ namespace Machines.BL.Handlers
                 return toReturn;
             }
 
-            if (MachineDataAccess.GetAllMachines().Select(machine => machine.name).Contains(machine.name))
+            var machineWithSameNameExists = false;
+            foreach (var item in MachineDataAccess.GetAllMachines())
+            {
+                if (item.name == machine.name && item.id != machine.id)
+                {
+                    machineWithSameNameExists = true;
+                }
+            }
+            if (machineWithSameNameExists)
             {
                 toReturn.StatusCode = HttpStatusCode.BadRequest;
                 toReturn.Errors.Add("Name already present in DB");
                 return toReturn;
             }
+
 
             var insertMachineId = MachineDataAccess.InsertMachine(machine);
             toReturn.Payload = insertMachineId;
