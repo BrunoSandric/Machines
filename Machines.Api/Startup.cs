@@ -11,17 +11,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Machines_Malfunctions
+namespace Machines.Api
+
 {
     public class Startup
     {
+        //on startup ConnectionString is obtained from appsettings.json  
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
 
             DatabaseUtils.ConnectionString = configuration.GetConnectionString("DEV");
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.

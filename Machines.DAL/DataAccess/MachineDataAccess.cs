@@ -8,6 +8,7 @@ using System.Text;
 
 namespace Machines.DAL.DataAccess
 {
+    //using - Provides a convenient syntax that ensures the correct use of IDisposable objects. -- closes connection channel 
     public static class MachineDataAccess
     {
         public static List<Machine> GetAllMachines()

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Machines_Malfunctions.Controllers
+namespace Machines.Api.Controllers
 {
     [ApiController]
     public class MainController : ControllerBase
@@ -122,7 +122,6 @@ namespace Machines_Malfunctions.Controllers
             return Ok(response.Payload);
         }
 
-
         [HttpPost("/api/malfunctions")]
         public IActionResult InsertMalfunction([FromBody] Malfunction malfunction)
         {
@@ -134,7 +133,6 @@ namespace Machines_Malfunctions.Controllers
             }
             return Ok(response.Payload);
         }
-
 
         [HttpDelete("/api/malfunctions/{malfunctionId}")]
         public IActionResult DeleteMalfunction(int malfunctionId)
@@ -153,7 +151,6 @@ namespace Machines_Malfunctions.Controllers
 
             return Ok();
         }
-
 
         [HttpPut("/api/malfunctions/{malfunctionId}")]
         public IActionResult UpdateMalfunction(int malfunctionId, [FromBody] Malfunction malfunction)

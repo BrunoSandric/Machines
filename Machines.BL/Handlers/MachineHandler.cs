@@ -66,6 +66,8 @@ namespace Machines.BL.Handlers
         {
             var toReturn = new ApiResponseModel();
 
+            #region validation
+
             if (string.IsNullOrEmpty(machine.name))
             {
                 toReturn.StatusCode = HttpStatusCode.BadRequest;
@@ -88,6 +90,7 @@ namespace Machines.BL.Handlers
                 return toReturn;
             }
 
+            #endregion
 
             var insertMachineId = MachineDataAccess.InsertMachine(machine);
             toReturn.Payload = insertMachineId;

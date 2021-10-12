@@ -26,10 +26,11 @@ namespace Machines.BL.Handlers
 
             var count = malfunctions.Count;
 
-            //pagination
+            #region pagination
+
             if (page > 0 && pageSize > 1)
             {
-                pageSize = pageSize ?? 20;
+                pageSize = pageSize ?? 20; //if pageSize = null make it 20
                 int skip = (page.Value - 1) * pageSize.Value;
 
                 if (malfunctions.Count <= skip)
@@ -42,6 +43,9 @@ namespace Machines.BL.Handlers
 
                 malfunctions = malfunctions.Skip(skip).Take(pageSize.Value).ToList();
             }
+
+            #endregion
+
 
             toReturn.Payload = new
             {
@@ -70,6 +74,8 @@ namespace Machines.BL.Handlers
         public static ApiResponseModel InsertMalfunction(Malfunction malfunctions)
         {
             var toReturn = new ApiResponseModel();
+
+            #region validation
 
             var activeMalfunctionOnMachine = false;
             var malfunctionWithSameIdExists = false;
@@ -102,6 +108,8 @@ namespace Machines.BL.Handlers
                 toReturn.Errors.Add("Malfunction ID already present in DB");
                 return toReturn;
             }
+
+            #endregion
 
             var insertMalfunctionId = MalfunctionDataAccess.InsertMalfunction(malfunctions);
             toReturn.Payload = insertMalfunctionId;

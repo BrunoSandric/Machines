@@ -16,6 +16,8 @@ namespace Machines.BL.Models
         public string Description { get; set; }
         public double? Duration { get; set; }
 
+
+        //overloading constructor in case of future implementation
         public MalfunctionModel()
         {
             CalculateDuration();

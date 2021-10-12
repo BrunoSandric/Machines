@@ -7,9 +7,10 @@ namespace Machines.BL.Models
 {
     public class MalfunctionStatusModel
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int id { get; set; } //atm 1 or 2 - check class MalfunctionStatuses
+        public string name { get; set; } //atm Active or Finished - check class MalfunctionStatuses
 
+        //overloading constructor in case of future implementation
         public MalfunctionStatusModel() { }
         public MalfunctionStatusModel(MalfunctionStatus dbEntity)
         {
@@ -18,6 +19,7 @@ namespace Machines.BL.Models
 
         }
     }
+    //changed on frontend
     public static class MalfunctionStatuses
     {
         public const int Active = 1;

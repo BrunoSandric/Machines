@@ -25,6 +25,8 @@ namespace Machines.BL.Models
 
         public double? AverageDuration { get; set; }
 
+
+        //overloading constructor in case of future implementation
         public MachineWithMalfunctionsModel()
         {
             CalculateAverageDuration();
