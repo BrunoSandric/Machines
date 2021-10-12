@@ -16,6 +16,11 @@ namespace Machines.Api.Controllers
     public class MainController : ControllerBase
     {
         //HTTP methods correspond to CRUD 
+
+        //Create - POST
+        //Read   - GET
+        //Update - PUT
+        //Delete - DELETE
         #region Machines
 
         [HttpGet("/api/machines")]
@@ -54,6 +59,16 @@ namespace Machines.Api.Controllers
         public IActionResult DeleteMachine(int machineId)
         {
             var response = MachineHandler.DeleteMachine(machineId);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest) 
+            {
+                return NotFound(response.Errors);
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return NotFound(response.Errors);
+            }
 
             if (response.StatusCode == HttpStatusCode.NotFound)
             {

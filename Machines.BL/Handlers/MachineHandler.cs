@@ -102,7 +102,28 @@ namespace Machines.BL.Handlers
         {
             var toReturn = new ApiResponseModel();
 
+            var targetMachineHasMalfuntions = false;
+            #region validation
+
+            //check if machine has no malfuntions
+            foreach (var malfunction in MalfunctionDataAccess.GetAllMalfunctions())
+            {
+                if (malfunction.machineid == machineId)
+                {
+                    targetMachineHasMalfuntions = true;
+                    break;
+                }
+            }
+            if (targetMachineHasMalfuntions)
+            {
+                toReturn.StatusCode = HttpStatusCode.BadRequest;
+                toReturn.Errors.Add("Machine has malfunctions and cannot be deleted. Remove malfunctions before deleting machine");
+                return toReturn;
+            }
+
+            //check if machine exists
             var exists = false;
+
             foreach (var machine in MachineDataAccess.GetAllMachines())
             {
                 if (machine.id == machineId)
@@ -117,8 +138,9 @@ namespace Machines.BL.Handlers
                 toReturn.Errors.Add("Machine ID not found in DB");
                 return toReturn;
             }
+            #endregion
 
-
+            //delete
             var deleteSuccess = MachineDataAccess.DeleteMachine(machineId);
             if (!deleteSuccess)
             {

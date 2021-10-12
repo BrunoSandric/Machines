@@ -11,6 +11,8 @@ namespace Machines.BL.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+
+        //overloading constructor in case of future implementation
         public MachineModel() { }
 
         public MachineModel(Machine dbEntity)

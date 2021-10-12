@@ -81,7 +81,7 @@ namespace Machines.BL.Handlers
             var malfunctionWithSameIdExists = false;
             foreach (var item in MalfunctionDataAccess.GetAllMalfunctions())
             {
-                if (item.statusid == MalfunctionStatuses.Finished && item.machineid == malfunctions.machineid)
+                if (item.statusid == MalfunctionStatuses.Active && item.machineid == malfunctions.machineid)
                 {
                     activeMalfunctionOnMachine = true;
                 }
